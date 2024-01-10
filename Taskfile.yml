@@ -1,0 +1,24 @@
+version: "3"
+
+dotenv:
+  - .env
+
+tasks:
+  setup:
+    dir: packages/wishlist
+  
+  login:
+    - echo "Password is $NUV_PASSWORD"
+    - nuv -login $NUV_HOST $NUV_USER
+
+  default:
+    - task: build
+    - task: deploy
+
+  build:
+    dir: packages/wishlist
+    
+  deploy:
+    dir: packages
+    cmds:
+      - nuv -wsk project deploy

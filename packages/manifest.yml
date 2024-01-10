@@ -1,0 +1,20 @@
+packages:
+  wishlist:
+    inputs:
+      SLACK_URL_WISHLIST: ${SLACK_URL_WISHLIST}
+      API_KEY_WISHLIST: ${API_KEY_WISHLIST}
+      ORGANIZATION_WISHLIST: ${ORGANIZATION_WISHLIST}
+      PUBLIC_ASSISTANT_WISHLIST_AI_ID: ${PUBLIC_ASSISTANT_WISHLIST_AI_ID}
+    actions:
+      notify:
+        web: true
+        function: wishlist/notify.py
+      createThread:
+        web: true
+        function: wishlist/createThread.py
+      listMessages:
+        web: true
+        function: wishlist/listMessages.py
+      sendMessage:
+        web: true
+        function: wishlist/sendMessage.py
