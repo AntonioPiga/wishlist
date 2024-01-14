@@ -3,14 +3,14 @@ from openai import OpenAI
 def main(args):
     try:
         client = OpenAI(
-            organization=args['ORGANIZATION_WISHLIST'],
-            apiKey=args['API_KEY_WISHLIST']
+            organization=args.get('ORGANIZATION'),
+            api_key=args.get('API_KEY_AI')
         )
 
         empty_thread = client.beta.threads.create()
 
         return {
-        'body': empty_thread
+            'body': empty_thread.id
         }
     
     except Exception as e:

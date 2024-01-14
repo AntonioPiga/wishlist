@@ -4,7 +4,7 @@ import json
 
 def main(args):
 
-    url = args.get('SLACK_URL_WISHLIST')
+    url = args.get('SLACK_URL')
     headers = {'Content-type': 'application/json'}
     payload = {'text': args.get('text')}
 

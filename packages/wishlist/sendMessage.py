@@ -1,41 +1,32 @@
 from openai import OpenAI
 
-
-async def main(args):
+def main(args):
     global ASSISTANT_ID
-    ASSISTANT_ID = args.get('PUBLIC_ASSISTANT_WISHLIST_AI_ID')
-    
+    ASSISTANT_ID = args.get('ASSISTANT_AI_ID')
+
     openai = OpenAI(
-        organization=args.get('ORGANIZATION_WISHLIST'),
-        apiKey=args.get('API_KEY_WISHLIST')
+        organization=args.get('ORGANIZATION'),
+        api_key=args.get('API_KEY_AI')
     )
-    
-    post = await post_message_on_thread(args['message'], args['threadId'], openai)
-   
-    
-    res = await run_thread(args['threadId'], openai)
+
+    post_message_on_thread(args['message'], args['threadId'], openai)
+    run_thread(args['threadId'], openai)
+
     return {
         'body': 'OK'
     }
 
-async def post_message_on_thread(message, thread_id, openai):
+def post_message_on_thread(message, thread_id, openai):
     try:
-        body = {
-            'content': message,
-            'role': 'user'
-        }
-        create_thread_resp = await openai.beta.threads.messages.create(thread_id, body)
+        create_thread_resp = openai.beta.threads.messages.create(thread_id, role="user", content=message)
         return create_thread_resp
     except Exception as error:
         print('Error creating message on thread:', error)
         raise error
 
-async def run_thread(thread_id, openai):
+def run_thread(thread_id, openai):
     try:
-        body = {
-            'assistant_id': ASSISTANT_ID
-        }
-        run_thread_resp = await openai.beta.threads.runs.create(thread_id, body)
+        run_thread_resp = openai.beta.threads.runs.create(thread_id, assistant_id=ASSISTANT_ID)
         return run_thread_resp
     except Exception as error:
         print('Error running thread:', error)
